@@ -5,6 +5,7 @@ const cors =  require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const articlesRouter = require('./articles/articles-router')
+const path = require('path')
 
 
 const app = express()
@@ -25,9 +26,11 @@ app.get('/', (req, res) => {
     res.send('Hello, world!')
 })
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/xss', (req, res) => {
     res.cookie('secretToken', '1234567890');
-    res.sendFile(__dirname + '/xss-example.html');
+    res.sendFile(__dirname + '/public/xss-example.html');
   });
   
 
